@@ -1,6 +1,6 @@
 # Detect-machine-LAN Fork
 
-# What is this
+## What is this
 Detect LAN machine is a software written in python to detect machines that connect to your network using nmap and using whitelist, if you find a team that is not in the whitelist can send an email notice.
 
 This fork is part of the exercises for UCLM ESII-2.
@@ -11,7 +11,7 @@ This fork is part of the exercises for UCLM ESII-2.
 - Requires [python-nmap library](https://bitbucket.org/xael/python-nmap).
 
 ## Using Detect-machine-LAN
-To display the help run:
+To display the help, please, run:
 ```
 python3 DetectMachineLan.py --help
 ```
