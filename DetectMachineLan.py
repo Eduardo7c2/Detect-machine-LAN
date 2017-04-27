@@ -17,7 +17,7 @@ import nmap
 __author__ = "GoldraK"
 __credits__ = "Eduardo7c2"
 __license__ = "GPL"
-__version__ = "0.1"
+__version__ = "0.2"
 __maintainer__ = "Eduardo7c2"
 __email__ = "Eduardo7c2@gmail.com"
 __status__ = "Prototype"
@@ -25,7 +25,7 @@ __status__ = "Prototype"
 
 class DetectMachineLan:
 	def __init__(self):
-		self.version = "0.1"
+		self.version = "0.2"
 		self.whitelist_file = ""
 		self.log_file = ""
 		self.verbose = False
@@ -64,13 +64,22 @@ class DetectMachineLan:
 		whitelist = self.__read_file()
 
 		alert_mac = ""
+		mac_list = []
 
 		machines = self.__scan_network(opts.ip)
 
 		for k, v in machines['scan'].items():
 			if str(v['status']['state']) == 'up':
-				# print str(v)
 				try:
+					for i in mac_list:
+						if str(v['addresses']['mac']) in i:
+							alert_mac = 'Duplicate MAC detected: ' + str(v['addresses']['mac']) + '\n'
+							msg = 'Duplicate MAC detected: ' + str(v['addresses']['mac'])
+							if self.verbose:
+								self.__console_message(msg)
+							if self.log_file:
+								self.__write_log_file(msg)
+					mac_list.append(str(v['addresses']['mac']))
 					if str(v['addresses']['mac']) in whitelist:
 						msg = 'Mac find ' + str(v['addresses']['mac']) + ' Ip: ' + str(v['addresses']['ipv4'])
 						if self.verbose:
@@ -78,15 +87,14 @@ class DetectMachineLan:
 						if self.log_file:
 							self.__write_log_file(msg)
 					else:
-						alert_mac = alert_mac + 'New MAC detected ' + str(v['addresses']['mac']) + ' IP: ' + str(
-							v['addresses']['ipv4']) + '\n'
-						msg = 'New MAC detected ' + str(v['addresses']['mac']) + ' IP: ' + str(
-							v['addresses']['ipv4'])
+						alert_mac = alert_mac + 'New MAC detected ' + str(v['addresses']['mac']) + ' IP: ' + \
+									str(v['addresses']['ipv4']) + '\n'
+						msg = 'New MAC detected ' + str(v['addresses']['mac']) + ' IP: ' + \
+							  str(v['addresses']['ipv4'])
 						if self.verbose:
 							self.__console_message(msg)
 						if self.log_file:
 							self.__write_log_file(msg)
-
 				except Exception:
 					msg = 'MAC not detected ' + str(v['addresses']['ipv4'])
 					if self.verbose:
