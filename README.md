@@ -4,6 +4,6 @@ Detect LAN machine is a software written in python to detect machines that conne
 
 - Script converted to Python 3.
 
-- Adapted to PEP9 style guide.
+- Adapted to PEP8 style guide.
 
 - Removed GTK features.
