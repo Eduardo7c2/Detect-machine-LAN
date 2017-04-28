@@ -17,7 +17,7 @@ import nmap
 __author__ = "GoldraK"
 __credits__ = "Eduardo7c2"
 __license__ = "GPL"
-__version__ = "0.2"
+__version__ = "0.2.1"
 __maintainer__ = "Eduardo7c2"
 __email__ = "Eduardo7c2@gmail.com"
 __status__ = "Prototype"
@@ -25,7 +25,7 @@ __status__ = "Prototype"
 
 class DetectMachineLan:
 	def __init__(self):
-		self.version = "0.2"
+		self.version = "0.2.1"
 		self.whitelist_file = ""
 		self.log_file = ""
 		self.verbose = False
@@ -73,7 +73,7 @@ class DetectMachineLan:
 				try:
 					for i in mac_list:
 						if str(v['addresses']['mac']) in i:
-							alert_mac = 'Duplicate MAC detected: ' + str(v['addresses']['mac']) + '\n'
+							alert_mac = alert_mac + 'Duplicate MAC detected: ' + str(v['addresses']['mac']) + '\n'
 							msg = 'Duplicate MAC detected: ' + str(v['addresses']['mac'])
 							if self.verbose:
 								self.__console_message(msg)
@@ -173,7 +173,8 @@ class DetectMachineLan:
 			header += 'Subject: No intruders - All machines known \n\n'
 			message = header + 'No intruders'
 
-		server = smtplib.SMTP(opts.server + ":" + opts.port)
+		server = smtplib.SMTP(opts.server, opts.port)
+		server.ehlo()
 		server.starttls()
 		server.login(opts.user, opts.password)
 		if self.verbose or self.log_file:
