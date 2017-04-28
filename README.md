@@ -18,10 +18,13 @@ python3 DetectMachineLan.py --help
 
 Example
 ```
-python3 DetectMachineLan.py -w whitelist.txt -l detect.log -r 192.168.100.0/24 -v -u user@server.com --pwd=123456 -s server.com -p 587 --et=destination@server.com
+# python3 DetectMachineLan.py -w whitelist.txt -l detect.log -r 192.168.100.0/24 -v -u user@server.com --pwd=123456 -s smtp.server.com -p 587 --et=destination@server.com
 ```
 
 ## Changelog
+## v0.2.1
+- Fixed bug in sending emails.
+
 ### v0.2
 - Added detection of duplicate MAC. 
 
